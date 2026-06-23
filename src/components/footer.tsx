@@ -220,19 +220,13 @@ export function Footer() {
               {c.links.map(([l, p]) => (
                 <li key={l}>
                   <Link
+                    className="ba-footer-link"
                     href={p}
                     style={{
                       fontSize: 13,
                       color: "rgba(255, 255, 255, 0.8)",
                       textDecoration: "none",
-                      transition: "color 0.2s",
                       fontFamily: "var(--font-sans)"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#FFFFFF";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)";
                     }}
                   >
                     {l}
@@ -265,6 +259,7 @@ export function Footer() {
             <div style={{ display: "flex", gap: 8 }}>
               {(["EN", "繁", "日", "ID", "VI"] as const).map((l) => (
                 <button
+                  className="ba-langitem"
                   key={l}
                   onClick={() => setLang(l.toLowerCase() as any)}
                   style={{
@@ -283,14 +278,6 @@ export function Footer() {
                     justifyContent: "center",
                     borderRadius: 14,
                     outline: "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "var(--accent)";
-                    e.currentTarget.style.color = "#FFFFFF";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
-                    e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
                   }}
                 >
                   {l}

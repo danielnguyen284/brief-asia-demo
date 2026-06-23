@@ -4,6 +4,7 @@
 export function Wordmark({ size = 32, invert = false }: { size?: number; invert?: boolean }) {
   return (
     <svg
+      className="ba-logo"
       height={size * 1.7}
       viewBox="0 18 252 64"
       aria-label="BriefAsia"

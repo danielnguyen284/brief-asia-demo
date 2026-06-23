@@ -91,7 +91,7 @@ export function Button({
         onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
         data-glow={dataGlow}
         style={composedStyle}
-        className={className}
+        className={className ? `ba-bbtn ${className}` : "ba-bbtn"}
         {...aria}
       >
         {children}
@@ -105,7 +105,7 @@ export function Button({
       onClick={onClick as MouseEventHandler<HTMLButtonElement>}
       data-glow={dataGlow}
       style={composedStyle}
-      className={className}
+      className={className ? `ba-bbtn ${className}` : "ba-bbtn"}
       {...aria}
     >
       {children}

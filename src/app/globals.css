@@ -666,3 +666,35 @@ button[data-glow="1"]:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* ---- Prototype Hover Effects ---- */
+.ba-bbtn { transition: background .15s ease, filter .15s ease, transform .15s ease, box-shadow .16s ease; }
+.ba-bbtn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+
+.ba-pill { transition: filter .12s ease, transform .12s ease, box-shadow .16s ease; }
+.ba-pill:hover { filter: brightness(1.07); transform: translateY(-1px); }
+
+.ba-logo { transition: opacity .15s ease, transform .15s ease; }
+.ba-logo:hover { opacity: .85; }
+
+.ba-langitem { transition: background .12s ease; }
+.ba-langitem:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* Link/card title color changes */
+.lk { transition: color .15s ease; }
+.lk:hover, .lk:hover h1, .lk:hover h2, .lk:hover h3, .lk:hover h4, .lk:hover h5, .lk:hover .ba-htitle { color: var(--accent) !important; }
+.ba-card:hover h1, .ba-card:hover h2, .ba-card:hover h3, .ba-card:hover h4, .ba-card:hover h5 { color: var(--accent) !important; }
+
+/* Ticker interactions */
+.ba-ticker-mask:hover .ba-ticker-track { animation-play-state: paused; }
+.ba-ticker-item { transition: opacity .14s ease; }
+.ba-ticker-item:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* UI Buttons */
+.ba-x { transition: color .14s ease, transform .14s ease; cursor: pointer; }
+.ba-x:hover { color: var(--accent) !important; transform: scale(1.15); }
+
+
+.ba-footer-link { transition: color 0.2s; }
+.ba-footer-link:hover { color: #FFFFFF !important; }
+
