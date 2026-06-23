@@ -329,7 +329,7 @@ function PerspectivesPillar({ p, items }: { p: NavPillar; items: Teaser[] }) {
             {p.title.en || "Perspectives"}
           </h2>
           <div style={{ flex: 1, borderTop: "1px solid rgba(255,255,255,0.2)" }} />
-          <Link className="lk" href={`/${p.slug}`} style={{ color: "var(--paper)", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+          <Link className="lk" href={`/${p.slug}`} style={{ color: "#f0a9b5", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.08em" }}>
             ALL VOICES →
           </Link>
         </div>
@@ -337,11 +337,11 @@ function PerspectivesPillar({ p, items }: { p: NavPillar; items: Teaser[] }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
           {voices.map(article => (
             <Link key={article.id} href={article.href} style={{ color: "inherit", textDecoration: "none" }}>
-              <article className="lk" style={{ borderTop: "1px solid var(--accent)", paddingTop: 16 }}>
-                <div style={{ color: "var(--accent)", fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 800, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              <article className="lk" style={{ borderTop: "2px solid var(--accent)", paddingTop: 16 }}>
+                <div style={{ color: "#f0a9b5", fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 800, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.08em" }}>
                   {article.section}
                 </div>
-                <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 600, lineHeight: 1.3, margin: "0 0 24px" }}>
+                <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 21, fontWeight: 600, lineHeight: 1.3, margin: "0 0 24px" }}>
                   {article.title}
                 </h3>
                 <div style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 700 }}>
@@ -375,8 +375,8 @@ function AsiaPillar({ p, items }: { p: NavPillar; items: Teaser[] }) {
     >
       <div className="container">
         <div style={{ alignItems: "center", display: "flex", gap: 14, marginBottom: 40 }}>
-          <h2 className="lk" style={{ color: "var(--navy)", fontFamily: "var(--font-sans)", fontSize: 24, fontWeight: 900, margin: 0 }}>
-            {p.title.en || "Across Asia"}
+          <h2 className="lk" style={{ color: "var(--navy)", fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 700, margin: 0 }}>
+            Across Asia
           </h2>
           <div style={{ flex: 1, borderTop: "1px solid var(--navy)" }} />
           <Link className="lk" href={`/${p.slug}`} style={{ color: "var(--accent)", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.08em" }}>
@@ -581,9 +581,12 @@ export function PillarShowcase({ pillars, byPillar }: PillarShowcaseProps) {
           );
         }
 
-        const leftCol = items.slice(1, 4);
-        const rightCol = items.slice(4, 7);
         const isTinted = sectionIndex % 2 === 1;
+        const gridClass = isTinted ? "ba-vertical-grid-4" : "ba-vertical-grid";
+        
+        const col1 = isTinted ? items.slice(1, 3) : items.slice(1, 4);
+        const col2 = isTinted ? items.slice(3, 5) : items.slice(4, 7);
+        const col3 = isTinted ? items.slice(5, 7) : [];
 
         return (
           <section
@@ -634,7 +637,7 @@ export function PillarShowcase({ pillars, byPillar }: PillarShowcaseProps) {
                 </Link>
               </div>
 
-              <div className="ba-vertical-grid">
+              <div className={gridClass}>
                 <Link
                   href={lead.href}
                   style={{ color: "inherit", textDecoration: "none" }}
@@ -698,24 +701,36 @@ export function PillarShowcase({ pillars, byPillar }: PillarShowcaseProps) {
                 </Link>
 
                 <div>
-                  {leftCol.map((article, index) => (
+                  {col1.map((article, index) => (
                     <StoryRow
                       article={article}
                       key={article.id}
-                      last={index === leftCol.length - 1}
+                      last={index === col1.length - 1}
                     />
                   ))}
                 </div>
 
                 <div>
-                  {rightCol.map((article, index) => (
+                  {col2.map((article, index) => (
                     <StoryRow
                       article={article}
                       key={article.id}
-                      last={index === rightCol.length - 1}
+                      last={index === col2.length - 1}
                     />
                   ))}
                 </div>
+
+                {col3.length > 0 && (
+                  <div>
+                    {col3.map((article, index) => (
+                      <StoryRow
+                        article={article}
+                        key={article.id}
+                        last={index === col3.length - 1}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </section>

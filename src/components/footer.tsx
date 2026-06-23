@@ -4,128 +4,112 @@ import Link from "next/link";
 import { Button } from "@briefasia/ui";
 import { Icon, type IconName } from "@/components/icons";
 import { Wordmark } from "@/components/wordmark";
-import { useT, useLang } from "@/lib/i18n";
+import { useLang } from "@/lib/i18n";
 
 type FooterLink = readonly [label: string, href: string];
 
 export function Footer() {
-  const t = useT();
   const { lang, setLang } = useLang();
 
   const cols: ReadonlyArray<{ title: string; links: ReadonlyArray<FooterLink> }> = [
     {
-      title: t("BriefAsia", "BriefAsia", "BriefAsia"),
+      title: "VERTICALS",
       links: [
-        [t("About", "Giới thiệu", "Tentang"), "/about"],
-        [t("Newsroom", "Toà soạn", "Redaksi"), "/about/newsroom"],
-        [t("Contact", "Liên hệ", "Kontak"), "/contact"],
-        [t("Press inquiries", "Hỏi báo chí", "Pertanyaan pers"), "/press"],
+        ["Asia", "/asia"],
+        ["Finance", "/finance"],
+        ["Technology", "/technology"],
+        ["Real Estate", "/real-estate"],
+        ["Sustainability", "/sustainability"],
+        ["Lifestyle", "/lifestyle"],
+        ["Perspectives", "/perspectives"],
       ],
     },
     {
-      title: t("Editorial", "Biên tập", "Editorial"),
+      title: "COMPANY",
       links: [
-        [t("Editorial Standards", "Tiêu chuẩn biên tập", "Standar Editorial"), "/trust/editorial"],
-        [t("AI Disclosure", "Công bố AI", "Pengungkapan AI"), "/trust/ai"],
-        [t("Corrections", "Đính chính", "Koreksi"), "/trust/corrections"],
-        [t("Sponsored & Affiliate Policy", "Chính sách tài trợ & affiliate", "Kebijakan Sponsor & Afiliasi"), "/trust/sponsored"],
+        ["About", "/about"],
+        ["Editorial Standards", "/trust/editorial"],
+        ["Corrections", "/trust/corrections"],
+        ["Advertise", "/advertise"],
+        ["Contact", "/contact"],
       ],
     },
     {
-      title: t("Business", "Doanh nghiệp", "Bisnis"),
+      title: "PRODUCTS",
       links: [
-        [t("Advertise", "Quảng cáo", "Iklan"), "/advertise"],
-        [t("BriefAsia Studio", "BriefAsia Studio", "BriefAsia Studio"), "/studio"],
-        [t("Awards", "Giải thưởng", "Penghargaan"), "/awards"],
-        [t("Newsletters", "Bản tin", "Newsletter"), "/newsletters"],
-      ],
-    },
-    {
-      title: t("Legal", "Pháp lý", "Legal"),
-      links: [
-        [t("Privacy", "Quyền riêng tư", "Privasi"), "/legal/privacy"],
-        [t("Terms", "Điều khoản", "Ketentuan"), "/legal/terms"],
-        [t("Cookies", "Cookies", "Cookies"), "/legal/cookies"],
-        [t("GDPR / PDPA", "GDPR / PDPA", "GDPR / PDPA"), "/legal/gdpr"],
+        ["Newsletters", "/newsletters"],
+        ["Morning Brief", "/newsletters/morning-brief"],
+        ["Podcast", "/podcast"],
+        ["RSS", "/rss.xml"],
       ],
     },
   ];
 
   const socials: ReadonlyArray<readonly [label: string, icon: IconName, href?: string]> = [
-    ["X", "external"],
-    ["LinkedIn", "external"],
-    ["Instagram", "external"],
+    ["LinkedIn", "linkedin", "https://linkedin.com"],
+    ["WhatsApp", "whatsapp", "https://whatsapp.com"],
+    ["Facebook", "facebook", "https://facebook.com"],
+    ["Instagram", "instagram", "https://instagram.com"],
     ["Email", "mail", "mailto:info@briefasia.com"],
-    ["RSS", "rss", "/rss.xml"],
   ];
 
   return (
     <footer
       style={{
         background: "var(--navy)",
-        borderTop: "3px solid var(--navy)",
         marginTop: 60,
         color: "#FFFFFF",
       }}
     >
       {/* Newsletter strip */}
-      <div style={{ background: "var(--accent)", borderBottom: "1px solid rgba(255, 255, 255, 0.15)" }}>
+      <div style={{ background: "var(--accent)" }}>
         <div
-          className="container r-footer-news"
+          className="container"
           style={{
-            display: "grid",
-            gap: 48,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 40,
             alignItems: "center",
-            padding: "40px 24px",
+            justifyContent: "space-between",
+            padding: "48px 24px",
           }}
         >
-          <div>
-            <div className="kicker" style={{ marginBottom: 8, color: "rgba(255, 255, 255, 0.8)", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-              {t("Get the AM Brief", "Nhận bản tin buổi sáng", "Dapatkan AM Brief")}
+          <div style={{ maxWidth: 500 }}>
+            <div className="kicker" style={{ marginBottom: 12, color: "rgba(255, 255, 255, 0.9)", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+              THE MORNING BRIEF · WEEKDAYS 7AM
             </div>
             <h3
               className="serif"
               style={{
-                margin: "0 0 6px",
-                fontSize: 24,
-                fontWeight: 650,
+                margin: 0,
+                fontSize: 28,
+                fontWeight: 600,
                 letterSpacing: "-0.01em",
                 lineHeight: 1.2,
                 color: "#FFFFFF",
               }}
             >
-              {t(
-                "The 5-minute briefing on Asia's markets, power, technology and culture",
-                "Bản tin 5 phút về công nghệ mỗi sáng, châu Á và thế giới.",
-                "Ringkasan 5 menit teknologi setiap pagi, Asia dan dunia."
-              )}
+              Asia’s overnight moves, distilled into a five-minute read.
             </h3>
-            <p style={{ margin: 0, fontSize: 13, color: "rgba(255, 255, 255, 0.85)", lineHeight: 1.5 }}>
-              {t(
-                "Founders, operators, and policy people across Asia read it before the day starts. Double opt-in. No tracking pixels. Unsubscribe with one click.",
-                "Các nhà sáng lập, quản lý và người làm chính sách khắp châu Á đọc trước khi ngày mới bắt đầu. Xác nhận kép. Không pixel theo dõi. Hủy đăng ký chỉ một cú nhấp.",
-                "Para founder, operator, dan pembuat kebijakan di Asia membacanya sebelum hari dimulai. Konfirmasi ganda. Tanpa piksel pelacak. Berhenti berlangganan dengan satu klik."
-              )}
-            </p>
           </div>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               alert("Confirmation email sent (demo)");
             }}
-            style={{ display: "flex", gap: 8 }}
+            style={{ display: "flex", gap: 12, alignItems: "center" }}
           >
             <input
               type="email"
               required
-              placeholder={t("you@company.com", "ban@congty.com", "anda@perusahaan.com")}
+              placeholder="Your email address"
               style={{
-                flex: 1,
-                padding: "12px 14px",
-                border: "1px solid rgba(255, 255, 255, 0.35)",
-                borderRadius: 5,
-                fontSize: 13,
-                background: "rgba(255, 255, 255, 0.1)",
+                width: 280,
+                padding: "14px 20px",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: 30,
+                fontSize: 14,
+                background: "rgba(255, 255, 255, 0.15)",
                 color: "#FFFFFF",
                 fontFamily: "var(--font-sans)",
                 outline: "none",
@@ -138,11 +122,14 @@ export function Footer() {
               style={{
                 background: "#FFFFFF",
                 color: "var(--accent)",
-                fontWeight: 600,
-                border: "1px solid #FFFFFF",
+                fontWeight: 700,
+                border: "none",
+                borderRadius: 30,
+                padding: "14px 28px",
+                fontSize: 14,
               }}
             >
-              {t("Subscribe", "Đăng ký", "Berlangganan")}
+              Subscribe free
             </Button>
           </form>
         </div>
@@ -150,44 +137,43 @@ export function Footer() {
 
       {/* Cols */}
       <div
-        className="container r-footer-cols"
+        className="container"
         style={{
-          padding: "48px 24px",
+          padding: "64px 24px 80px",
           display: "grid",
-          gap: 32,
+          gridTemplateColumns: "minmax(300px, 1.5fr) 1fr 1fr 1fr",
+          gap: 48,
         }}
       >
         <div>
-          <Wordmark size={26} invert={true} />
-          <div
-            className="mono"
-            style={{ fontSize: 11, letterSpacing: ".08em", marginTop: 6, lineHeight: 1.5, color: "rgba(255, 255, 255, 0.5)" }}
-          >
-            Asia intelligence, briefed daily
-          </div>
+          <Wordmark size={32} invert={true} />
           <p
-            style={{ fontSize: 12, lineHeight: 1.55, marginTop: 14, maxWidth: 280, color: "rgba(255, 255, 255, 0.7)" }}
+            style={{
+              fontSize: 13,
+              lineHeight: 1.6,
+              marginTop: 20,
+              marginBottom: 32,
+              maxWidth: 320,
+              color: "rgba(255, 255, 255, 0.65)",
+              fontFamily: "var(--font-serif)"
+            }}
           >
-            {t(
-              "An independent newsroom covering the people, capital, companies and policy shaping Asia.",
-              "Một toà soạn độc lập đưa tin về nền kinh tế công nghệ châu Á, xuất bản từ Singapore.",
-              "Ruang redaksi independen yang meliput ekonomi teknologi Asia, terbit dari Singapura."
-            )}
+            All of Asia. An independent newsroom covering the business, finance, technology and culture shaping the region, and the forces moving it next.
           </p>
-          <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+          <div style={{ display: "flex", gap: 12 }}>
             {socials.map(([k, ic, href]) => (
               <a
                 key={k}
                 title={k}
                 href={href ?? "#"}
                 style={{
-                  width: 32,
-                  height: 32,
+                  width: 36,
+                  height: 36,
                   border: "1px solid rgba(255, 255, 255, 0.2)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: 4,
+                  borderRadius: 18,
                   cursor: "pointer",
                   color: "#FFFFFF",
                   transition: "border-color 0.2s, background 0.2s",
@@ -201,7 +187,7 @@ export function Footer() {
                   e.currentTarget.style.background = "transparent";
                 }}
               >
-                <Icon name={ic} size={13} color="#FFFFFF" />
+                <Icon name={ic} size={14} color="#FFFFFF" />
               </a>
             ))}
           </div>
@@ -209,14 +195,14 @@ export function Footer() {
         {cols.map((c) => (
           <div key={c.title}>
             <div
-              className="upper"
               style={{
                 fontSize: 11,
-                fontWeight: 600,
-                letterSpacing: ".12em",
-                marginBottom: 14,
-                color: "#FFFFFF",
+                fontWeight: 700,
+                letterSpacing: ".08em",
+                marginBottom: 20,
+                color: "rgba(255, 255, 255, 0.7)",
                 textTransform: "uppercase",
+                fontFamily: "var(--font-sans)"
               }}
             >
               {c.title}
@@ -228,7 +214,7 @@ export function Footer() {
                 padding: 0,
                 display: "flex",
                 flexDirection: "column",
-                gap: 9,
+                gap: 12,
               }}
             >
               {c.links.map(([l, p]) => (
@@ -236,16 +222,17 @@ export function Footer() {
                   <Link
                     href={p}
                     style={{
-                      fontSize: 12,
-                      color: "rgba(255, 255, 255, 0.7)",
+                      fontSize: 13,
+                      color: "rgba(255, 255, 255, 0.8)",
                       textDecoration: "none",
                       transition: "color 0.2s",
+                      fontFamily: "var(--font-sans)"
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = "#FFFFFF";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
+                      e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)";
                     }}
                   >
                     {l}
@@ -258,44 +245,52 @@ export function Footer() {
       </div>
 
       {/* Trust band */}
-      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.12)", background: "color-mix(in oklab, var(--navy) 88%, #000)" }}>
+      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.05)" }}>
         <div
           className="container"
           style={{
-            padding: "18px 24px",
+            padding: "24px 24px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: 12,
+            gap: 16,
           }}
         >
-          <div className="mono" style={{ fontSize: 11, color: "rgba(255, 255, 255, 0.5)" }}>
-            © 2026 BriefAsia · Singapore · Member, Trust Project
+          <div style={{ fontSize: 11, color: "rgba(255, 255, 255, 0.5)", fontFamily: "var(--font-sans)" }}>
+            © 2026 BriefAsia Pte. Ltd. - Singapore · Editorial Standards · Privacy · Terms · PDPA
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 11 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(255, 255, 255, 0.5)" }}>
-              <Icon name="globe" size={12} color="rgba(255, 255, 255, 0.4)" />
-              <span>Asia Edition</span>
-            </div>
-            <span style={{ color: "rgba(255, 255, 255, 0.15)" }}>|</span>
+            <span style={{ color: "rgba(255, 255, 255, 0.5)", letterSpacing: "0.05em" }}>EDITION</span>
             <div style={{ display: "flex", gap: 8 }}>
-              {(["en", "vi", "id"] as const).map((l) => (
+              {(["EN", "繁", "日", "ID", "VI"] as const).map((l) => (
                 <button
                   key={l}
-                  onClick={() => setLang(l)}
+                  onClick={() => setLang(l.toLowerCase() as any)}
                   style={{
                     background: "transparent",
-                    border: "none",
-                    fontFamily: "var(--font-mono)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    fontFamily: "var(--font-sans)",
                     fontSize: 10,
-                    fontWeight: lang === l ? 700 : 400,
-                    color: lang === l ? "#FFFFFF" : "rgba(255, 255, 255, 0.5)",
+                    fontWeight: 500,
+                    color: "rgba(255, 255, 255, 0.7)",
                     cursor: "pointer",
                     textTransform: "uppercase",
-                    padding: "2px 4px",
-                    borderRadius: 2,
+                    width: 28,
+                    height: 28,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 14,
                     outline: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "var(--accent)";
+                    e.currentTarget.style.color = "#FFFFFF";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+                    e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
                   }}
                 >
                   {l}

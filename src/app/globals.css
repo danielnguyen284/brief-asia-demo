@@ -320,6 +320,12 @@ body {
   grid-template-columns: minmax(0, 1.62fr) minmax(260px, 1fr) minmax(260px, 1fr);
   min-height: 418px;
 }
+.ba-vertical-grid-4 {
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(0, 1.62fr) minmax(220px, 1fr) minmax(220px, 1fr) minmax(220px, 1fr);
+  min-height: 418px;
+}
 .r-hero {
   grid-template-columns: 1.7fr 1fr;
 }
@@ -335,20 +341,24 @@ body {
   .ba-home-rail > div {
     grid-column: 1 / -1;
   }
-  .ba-vertical-grid {
+  .ba-vertical-grid,
+  .ba-vertical-grid-4 {
     grid-template-columns: 1fr 1fr;
   }
-  .ba-vertical-grid > a {
+  .ba-vertical-grid > a,
+  .ba-vertical-grid-4 > a {
     grid-column: 1 / -1;
   }
 }
 @media (max-width: 900px) {
   .ba-home-lead-main,
   .ba-home-rail,
-  .ba-vertical-grid {
+  .ba-vertical-grid,
+  .ba-vertical-grid-4 {
     grid-template-columns: 1fr;
   }
-  .ba-vertical-grid > a {
+  .ba-vertical-grid > a,
+  .ba-vertical-grid-4 > a {
     grid-column: auto;
   }
   .r-hero {
