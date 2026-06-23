@@ -1,0 +1,585 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — single source of truth.
+   Mirrors design/project/index.html. See process/context/uxui/all-uxui.md.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --paper: #FDFCF8;
+  --surface: #FFFFFF;
+  --surface-2: #F2EFE5;
+  --ink: #111111;
+  --ink-2: #2A2A28;
+  --ink-soft: #2A2A28;
+  --muted: #5B5B58;
+  --muted-2: #8C8B85;
+  --faint: #8C8B85;
+  --hair: #E5E2D8;
+  --hair-2: #D8D4C6;
+  --line: #E5E2D8;
+  --line-strong: #D8D4C6;
+
+  --accent: #D4623C;
+  --accent-ink: #B14A28;
+  --amber: #F59E0B;
+  --brand-navy: #1B2A52;
+  --brand-amber: #D4623C;
+  --banner: #1B2A52;
+  --sponsored: #FEF3C7;
+  --up: #10B981;
+  --down: #EF4444;
+
+  /* Pillar colors — matches prototype taxonomy */
+  --ai: #3A4E8C;
+  --startups: #3E6E80;
+  --asia: #B0512E;
+  --dev: #46735C;
+  --products: #8F7238;
+  --policy: #5A6577;
+
+  /* Site pillar taxonomy (mapped to nearest prototype color) */
+  --color-pillar-asia: #B0512E;
+  --color-pillar-finance: #3E6E80;
+  --color-pillar-technology: #3A4E8C;
+  --color-pillar-real-estate: #8F7238;
+  --color-pillar-travel-dining: #B0512E;
+  --color-pillar-lifestyle: #8F7238;
+  --color-pillar-sustainability: #46735C;
+  --color-pillar-perspectives: #5A6577;
+
+  --shadow:
+    0 1px 0 rgba(17, 17, 17, 0.04),
+    0 12px 32px -16px rgba(17, 17, 17, 0.12);
+
+  --font-serif: var(--font-serif-loaded, "Schibsted Grotesk"), "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-sans-loaded, "IBM Plex Sans"), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono-loaded, "IBM Plex Mono"), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --maxw: 1280px;
+}
+
+html[data-theme="dark"] {
+  --paper: #0F172A;
+  --surface: #111C30;
+  --surface-2: #15223A;
+  --ink: #E2E8F0;
+  --ink-2: #CBD5E1;
+  --muted: #94A3B8;
+  --muted-2: #64748B;
+  --hair: #1E2B45;
+  --hair-2: #243453;
+  --sponsored: #3B2E0A;
+  --brand-navy: #E2E8F0;  /* lightened for dark mode */
+  --banner: #16223C;      /* softer banner for dark mode */
+}
+
+/* ---------------------------------------------------------------------------
+   Map CSS variables into Tailwind utilities (v4 @theme).
+   Lets us write `bg-paper text-ink border-hair text-accent` etc.
+   --------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-hair: var(--hair);
+  --color-hair-2: var(--hair-2);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-sponsored: var(--sponsored);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --color-banner: var(--banner);
+  --color-brand-navy: var(--brand-navy);
+  --color-amber: var(--amber);
+  --color-brand-amber: var(--brand-amber);
+
+  --color-asia: var(--asia);
+  --color-finance: var(--startups);
+  --color-technology: var(--ai);
+  --color-real-estate: var(--products);
+  --color-travel-dining: var(--asia);
+  --color-lifestyle: var(--products);
+  --color-sustainability: var(--dev);
+  --color-perspectives: var(--policy);
+
+  /* Named pillar aliases */
+  --color-ai: var(--ai);
+  --color-startups: var(--startups);
+  --color-dev: var(--dev);
+  --color-products: var(--products);
+  --color-policy: var(--policy);
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* ---------------------------------------------------------------------------
+   Base resets + editorial typography
+   --------------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-size: 15px;
+  line-height: 1.5;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+.serif {
+  font-family: var(--font-serif);
+  font-feature-settings: normal;
+}
+/* Accent hover ring for prominent CTA anchors (design refresh). */
+.accent-glow {
+  transition: box-shadow 0.2s ease;
+}
+.accent-glow:hover {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+/* Headings must wrap long tokens instead of overflowing on narrow screens. */
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+}
+.mono {
+  font-family: var(--font-mono);
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   Layout shell + utility classes
+   Ported from design/project/index.html. Note: `.container` here intentionally
+   shadows Tailwind v4's built-in `.container` utility (which has width:100%
+   but no auto margins). This rule must stay AFTER `@import "tailwindcss"`.
+   --------------------------------------------------------------------------- */
+
+.container {
+  max-width: var(--maxw);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+@media (max-width: 720px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive layout system.
+   Components author DESKTOP values inline; these classes override the grid at
+   tablet (<=1024px) and phone (<=640px) so layouts COLLAPSE instead of
+   overflowing the viewport. A class only wins over an inline style when the
+   inline style does NOT set the same property — so any component using these
+   must drop its inline `grid-template-columns` and keep only `display:grid`
+   (+ gap) inline. Breakpoints: phone <=640, tablet <=1024, desktop >1024.
+   See process/context/uxui/all-uxui.md.
+   --------------------------------------------------------------------------- */
+
+/* Safety net: clip (not hidden) keeps the sticky header working while still
+   preventing a stray wide child from creating a horizontal scrollbar. */
+body {
+  overflow-x: clip;
+}
+
+/* Header desktop/mobile swap (hamburger menu appears <=900px). */
+.desktop-only {
+  display: flex;
+}
+.mobile-only {
+  display: none;
+}
+@media (max-width: 900px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+  /* Top utility strip: keep only the date (left) and language picker (right).
+     !important is needed because some of these children carry an inline
+     display value that would otherwise win over the stylesheet. */
+  .util-left > *:not(:first-child) {
+    display: none !important;
+  }
+  .util-right > *:not(:last-child) {
+    display: none !important;
+  }
+  /* Pillar nav row: hide the (overflowing) nav, keep the ink bottom rule.
+     The hamburger drawer owns navigation on mobile. !important beats the
+     inline display:flex on the inner container. */
+  .pillar-nav-row > .container {
+    display: none !important;
+  }
+}
+
+/* Symmetric card grids: 4->2->1 and 3->2->1 and 2->1. */
+.r-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.r-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.r-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 1024px) {
+  .r-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .r-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .r-grid-4,
+  .r-grid-3,
+  .r-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Hero: lead + "also leading" rail -> single column. */
+.r-hero {
+  grid-template-columns: 1.7fr 1fr;
+}
+@media (max-width: 900px) {
+  .r-hero {
+    grid-template-columns: 1fr;
+  }
+  .r-hero-aside {
+    border-inline-start: none !important;
+    padding-inline-start: 0 !important;
+  }
+}
+@media (max-width: 480px) {
+  .r-hero-item {
+    grid-template-columns: 1fr 84px !important;
+  }
+}
+
+/* Brief band: label | brief | brief | button. */
+.r-brief {
+  grid-template-columns: 200px 1fr 1fr 150px;
+}
+@media (max-width: 860px) {
+  .r-brief {
+    grid-template-columns: 1fr 1fr;
+  }
+  .r-brief-divider {
+    display: none !important;
+  }
+}
+@media (max-width: 560px) {
+  .r-brief {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Asymmetric "main + side" patterns -> stack. */
+.r-split-12 {
+  grid-template-columns: 1fr 2fr;
+}
+.r-split-21 {
+  grid-template-columns: 2fr 1fr;
+}
+@media (max-width: 820px) {
+  .r-split-12,
+  .r-split-21 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Feature block (cover image | headline) -> stack on tablet/phone. */
+.r-feature {
+  grid-template-columns: 1.3fr 1fr;
+}
+@media (max-width: 768px) {
+  .r-feature {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fixed-width sidebar + content (facets, account nav, trust nav) -> stack. */
+.r-sidebar {
+  grid-template-columns: 220px 1fr;
+}
+@media (max-width: 768px) {
+  .r-sidebar {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sponsored strip (img | text | cta) + awards (medallion | text | cta). */
+.r-strip-3 {
+  grid-template-columns: 1fr 2fr auto;
+}
+.r-awards {
+  grid-template-columns: 1fr auto;
+}
+@media (max-width: 720px) {
+  .r-strip-3 {
+    grid-template-columns: 1fr;
+  }
+  .r-awards {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+}
+
+/* Footer grids. */
+.r-footer-news {
+  grid-template-columns: 1fr 1fr;
+}
+.r-footer-cols {
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+}
+@media (max-width: 860px) {
+  .r-footer-cols {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .r-footer-news {
+    grid-template-columns: 1fr;
+  }
+  .r-footer-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Wide data tables: scroll horizontally inside their card instead of pushing
+   the whole page wide. */
+.r-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.r-table-scroll > table {
+  min-width: 680px;
+}
+
+.kicker {
+  font: 600 11px/1 var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.kicker.muted {
+  color: var(--muted);
+}
+
+.divider {
+  height: 1px;
+  background: var(--hair);
+  width: 100%;
+}
+.rule-thick {
+  height: 3px;
+  background: var(--ink);
+  width: 100%;
+}
+
+.text-mute {
+  color: var(--muted);
+}
+.text-mute-2 {
+  color: var(--muted-2);
+}
+.upper {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.linkish {
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(100% - 1px),
+    currentColor 1px
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 0.3s ease;
+}
+.linkish:hover {
+  background-size: 100% 100%;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 11px/1 var(--font-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--hair-2);
+  color: var(--ink-2);
+  background: var(--surface);
+}
+
+/* Focus / selection */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--hair-2);
+  border-radius: 999px;
+}
+
+/* Animations + interactive micro-states */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+  }
+}
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--down);
+  animation: pulseDot 1.6s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Accent button glow on hover (paired with data-glow="1") */
+button {
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+}
+button[data-glow="1"]:hover {
+  box-shadow:
+    0 0 0 1px rgba(224, 78, 31, 0.4),
+    0 8px 28px -6px rgba(224, 78, 31, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Article body — styles the semantic elements emitted by Payload's Lexical
+   RichText renderer (paragraphs, headings, quotes, lists, links). Typography
+   (font, size, colour) is inherited from the .article-prose wrapper.
+   NB: use a descendant (not direct-child) combinator — RichText wraps its
+   output in a <div class="payload-richtext">, so paragraphs are nested one
+   level below .article-prose, not direct children. DisclosureBox uses only
+   <div>s, so this never styles disclosure copy. */
+.article-prose p {
+  margin: 0 0 22px;
+}
+.article-prose h2,
+.article-prose h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+.article-prose h2 {
+  font-size: 28px;
+  margin: 36px 0 14px;
+}
+.article-prose h3 {
+  font-size: 24px;
+  margin: 32px 0 14px;
+}
+.article-prose blockquote {
+  margin: 40px -40px;
+  padding: 24px 32px;
+  border-inline-start: 3px solid var(--accent);
+  background: var(--surface);
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+}
+.article-prose ul,
+.article-prose ol {
+  margin: 0 0 22px;
+  padding-inline-start: 24px;
+}
+.article-prose li {
+  margin: 0 0 8px;
+}
+.article-prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
