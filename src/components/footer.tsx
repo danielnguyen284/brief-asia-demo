@@ -62,8 +62,8 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: "#131B26",
-        borderTop: "3px solid var(--accent)",
+        background: "var(--navy)",
+        borderTop: "3px solid var(--navy)",
         marginTop: 60,
         color: "#FFFFFF",
       }}
@@ -95,7 +95,7 @@ export function Footer() {
               }}
             >
               {t(
-                "The 5-minute briefing on the tech morning, Asia and the world",
+                "The 5-minute briefing on Asia's markets, power, technology and culture",
                 "Bản tin 5 phút về công nghệ mỗi sáng, châu Á và thế giới.",
                 "Ringkasan 5 menit teknologi setiap pagi, Asia dan dunia."
               )}
@@ -169,7 +169,7 @@ export function Footer() {
             style={{ fontSize: 12, lineHeight: 1.55, marginTop: 14, maxWidth: 280, color: "rgba(255, 255, 255, 0.7)" }}
           >
             {t(
-              "An independent newsroom covering Asia's technology economy, published from Singapore.",
+              "An independent newsroom covering the people, capital, companies and policy shaping Asia.",
               "Một toà soạn độc lập đưa tin về nền kinh tế công nghệ châu Á, xuất bản từ Singapore.",
               "Ruang redaksi independen yang meliput ekonomi teknologi Asia, terbit dari Singapura."
             )}
@@ -258,7 +258,7 @@ export function Footer() {
       </div>
 
       {/* Trust band */}
-      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.1)", background: "#0D141C" }}>
+      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.12)", background: "color-mix(in oklab, var(--navy) 88%, #000)" }}>
         <div
           className="container"
           style={{

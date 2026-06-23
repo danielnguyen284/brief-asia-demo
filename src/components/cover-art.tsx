@@ -2,9 +2,9 @@ import type { CSSProperties } from "react";
 import type { PillarId } from "@/lib/data";
 
 // ============================================================================
-// Editorial cover art — abstract geometric compositions per pillar.
-// Ported from design/project/src/art.jsx. Deterministic from a seed (article id)
-// so each story gets the same cover every render.
+// Editorial cover art.
+// The BriefAsia prototype uses subject-revealing editorial imagery. Uploaded
+// CMS images win; otherwise we fall back to deterministic editorial photos.
 // ============================================================================
 
 function hashStr(s: string): number {
@@ -16,6 +16,47 @@ function hashStr(s: string): number {
 }
 
 type Palette = [string, string, string, string];
+
+const EDITORIAL_IMAGES: Record<PillarId, ReadonlyArray<string>> = {
+  asia: [
+    "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&w=1400&q=80",
+  ],
+  finance: [
+    "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=1400&q=80",
+  ],
+  technology: [
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1400&q=80",
+  ],
+  "real-estate": [
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80",
+  ],
+  "travel-dining": [
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
+  ],
+  lifestyle: [
+    "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=80",
+  ],
+  sustainability: [
+    "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1400&q=80",
+  ],
+  perspectives: [
+    "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
+  ],
+};
+
+function editorialImageFor(pillar: string, seed: string): string | null {
+  const key = (pillar as PillarId) in EDITORIAL_IMAGES ? (pillar as PillarId) : "asia";
+  const images = EDITORIAL_IMAGES[key];
+  return images[hashStr(seed) % images.length] ?? null;
+}
 
 const ART_PALETTES: Record<PillarId, ReadonlyArray<Palette>> = {
   asia: [
@@ -79,14 +120,22 @@ export function CoverArt({
   style = {},
   src,
 }: CoverArtProps) {
-  if (src) {
+  const editorialSrc = src ?? editorialImageFor(pillar, seed);
+
+  if (editorialSrc) {
     return (
-      <div style={{ position: "relative", height, overflow: "hidden", ...style }}>
+      <div style={{ position: "relative", height, overflow: "hidden", background: "var(--ph)", ...style }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src}
+          src={editorialSrc}
           alt={label ?? ""}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+            filter: "saturate(.96) contrast(1.02)",
+          }}
         />
       </div>
     );

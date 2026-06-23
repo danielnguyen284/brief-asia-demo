@@ -1,18 +1,23 @@
 "use client";
 
-import { useT } from "@/lib/i18n";
 import { useEffect, useState } from "react";
 
 const breakingNews = [
-  "MAS clears DBS for digital-asset custody services in Singapore.",
-  "TSMC announces $12B advanced packaging facility expansion.",
-  "UPI-Vietnam payment connection goes live for cross-border merchants.",
-  "VNG Corp reports 34% revenue growth in latest quarterly statement.",
-  "Straits Times Index hits 3-year high amid financial sector surge.",
+  {
+    time: "14:32",
+    title: "Bank Indonesia holds rate at 6.25% as rupiah stabilises",
+  },
+  {
+    time: "13:05",
+    title: "GIC leads $1.2B round in Indonesian data-centre operator",
+  },
+  {
+    time: "11:48",
+    title: "TSMC Arizona yields now match Taiwan fabs, sources say",
+  },
 ];
 
 export function BreakingTicker() {
-  const t = useT();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,73 +28,96 @@ export function BreakingTicker() {
 
   return (
     <div
+      data-testid="breaking-ticker"
       style={{
-        background: "#8B0000",
-        color: "#ffffff",
-        height: "36px",
-        display: "flex",
         alignItems: "center",
+        background: "var(--accent)",
+        color: "#fff",
+        display: "flex",
+        height: 42,
+        marginBottom: 28,
         overflow: "hidden",
-        fontSize: "13px",
-        fontFamily: "var(--font-sans)",
-        fontWeight: 500,
-        marginBottom: "24px",
+        width: "100%",
       }}
     >
-      {/* Label Badge */}
       <div
+        className="container"
         style={{
-          background: "#FFD700",
-          color: "#8B0000",
-          fontWeight: 700,
-          padding: "0 16px",
+          alignItems: "center",
+          display: "flex",
+          gap: 16,
           height: "100%",
-          display: "flex",
-          alignItems: "center",
-          textTransform: "uppercase",
-          letterSpacing: "0.1em",
-          zIndex: 10,
-          boxShadow: "4px 0 10px rgba(0,0,0,0.15)",
-        }}
-      >
-        {t("BREAKING", "TIN NÓNG", "BREAKING")}
-      </div>
-
-      {/* Marquee Wrapper */}
-      <div
-        style={{
-          flex: 1,
           overflow: "hidden",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
+          padding: "0 28px",
         }}
       >
-        <div
-          className="marquee-content"
+        <span
           style={{
-            display: "flex",
-            whiteSpace: "nowrap",
-            gap: "48px",
-            paddingLeft: "24px",
-            animation: "marquee 25s linear infinite",
+            color: "#fff",
+            fontFamily: "var(--font-sans)",
+            fontSize: 11,
+            fontWeight: 900,
+            letterSpacing: "1.1px",
+            lineHeight: 1,
           }}
         >
-          {breakingNews.concat(breakingNews).map((news, idx) => (
-            <span key={idx} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span>✦</span>
-              <span>{news}</span>
-            </span>
-          ))}
+          BREAKING
+        </span>
+        <div
+          className="ba-ticker-mask"
+          style={{
+            flex: 1,
+            height: 20,
+            minWidth: 0,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            className="ba-ticker-track"
+            style={{
+              alignItems: "center",
+              animation: "briefasia-ticker 30s linear infinite",
+              display: "inline-flex",
+              gap: 26,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {breakingNews.concat(breakingNews, breakingNews).map((news, idx) => (
+              <span
+                className="ba-ticker-item"
+                key={`${news.time}-${idx}`}
+                style={{
+                  color: "#fff",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 11,
+                    fontWeight: 800,
+                    marginRight: 8,
+                  }}
+                >
+                  {news.time}
+                </span>
+                <span>{news.title}</span>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
       <style>{`
-        @keyframes marquee {
+        @keyframes briefasia-ticker {
           0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
+          100% { transform: translate3d(-33.333%, 0, 0); }
         }
-        .marquee-content:hover {
+        .ba-ticker-track:hover {
           animation-play-state: paused;
         }
       `}</style>

@@ -1,26 +1,11 @@
 import Link from "next/link";
 import type { MarketSnapshot } from "@/lib/payload-server";
 
-// Country name → flag emoji lookup (fallback to globe)
-const COUNTRY_FLAGS: Record<string, string> = {
-  Singapore: "🇸🇬",
-  Japan: "🇯🇵",
-  "Hong Kong": "🇭🇰",
-  Indonesia: "🇮🇩",
-  "South Korea": "🇰🇷",
-  Vietnam: "🇻🇳",
-  Taiwan: "🇹🇼",
-  Thailand: "🇹🇭",
-  Malaysia: "🇲🇾",
-  India: "🇮🇳",
-  Philippines: "🇵🇭",
-  "China Watch": "🇨🇳",
-  China: "🇨🇳",
-  Australia: "🇦🇺",
-};
-
 interface MarketTickerProps {
-  snapshots: Pick<MarketSnapshot, "id" | "country" | "market" | "value" | "changePct" | "summary">[];
+  snapshots: Pick<
+    MarketSnapshot,
+    "id" | "country" | "market" | "value" | "changePct" | "summary"
+  >[];
 }
 
 export function MarketTicker({ snapshots }: MarketTickerProps) {
@@ -28,198 +13,161 @@ export function MarketTicker({ snapshots }: MarketTickerProps) {
   if (cards.length === 0) return null;
 
   return (
-    <section style={{ marginBottom: 48 }}>
-      {/* Section header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          justifyContent: "space-between",
-          borderTop: "3px solid var(--brand-navy)",
-          paddingTop: 10,
-          marginBottom: 18,
-        }}
-      >
-        <div>
-          <span
-            className="mono upper"
-            style={{
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: ".14em",
-              color: "var(--muted)",
-            }}
-          >
-            Markets
-          </span>
-          <h2
-            className="serif"
-            style={{
-              margin: "4px 0 0",
-              fontSize: 22,
-              fontWeight: 650,
-              letterSpacing: "-0.015em",
-            }}
-          >
-            Asia Market Snapshot
-          </h2>
-        </div>
-        <Link
-          href="/markets"
-          className="mono"
+    <section
+      data-testid="market-band"
+      style={{
+        background: "var(--navy)",
+        borderTop: "1px solid #e3ddd6",
+        color: "#fff",
+        margin: "62px calc(50% - 50vw) 0",
+        padding: "34px 0",
+        width: "100vw",
+      }}
+    >
+      <div className="container">
+        <div
           style={{
-            fontSize: 11,
-            color: "var(--accent)",
-            textDecoration: "none",
-            display: "flex",
             alignItems: "center",
-            gap: 4,
+            display: "flex",
+            gap: 14,
+            marginBottom: 22,
           }}
         >
-          All markets →
-        </Link>
-      </div>
-
-      {/* 2×4 grid */}
-      <div
-        className="market-ticker-grid"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: 12,
-        }}
-      >
-        {cards.map((m) => {
-          const isUp = m.changePct >= 0;
-          const changeColor = isUp ? "#22c55e" : "#ef4444";
-          const changeBg = isUp ? "rgba(34,197,94,.10)" : "rgba(239,68,68,.10)";
-          const changeSign = isUp ? "+" : "";
-          const flag = COUNTRY_FLAGS[m.country] ?? "🌏";
-
-          return (
-            <Link
-              key={m.id}
-              href="/markets"
-              style={{ textDecoration: "none", color: "inherit" }}
+          <div style={{ alignItems: "baseline", display: "flex", gap: 14 }}>
+            <span
+              className="lk"
+              style={{
+                color: "#fff",
+                fontFamily: "var(--font-sans)",
+                fontSize: 22,
+                fontWeight: 900,
+              }}
             >
-              <article
-                className="market-card"
+              Markets
+            </span>
+            <span
+              style={{
+                color: "#b9b1c9",
+                fontFamily: "var(--font-sans)",
+                fontSize: 12,
+                fontWeight: 600,
+              }}
+            >
+              Updated 02:58 SGT
+            </span>
+          </div>
+          <div style={{ flex: 1, borderTop: "1px solid rgba(255, 255, 255, 0.16)" }} />
+          <Link
+            className="lk"
+            href="/markets"
+            style={{
+              color: "#f0a9b5",
+              fontFamily: "var(--font-sans)",
+              fontSize: 12,
+              fontWeight: 700,
+              textDecoration: "none",
+            }}
+          >
+            ALL MARKETS →
+          </Link>
+        </div>
+
+        <div
+          className="market-ticker-grid"
+          style={{
+            background: "rgba(255,255,255,.16)",
+            border: "1px solid rgba(255,255,255,.16)",
+            display: "grid",
+            gap: 1,
+            gridTemplateColumns: "repeat(4, 1fr)",
+          }}
+        >
+          {cards.map((m) => {
+            const isUp = m.changePct >= 0;
+            const changeColor = isUp ? "#75d6a2" : "#f0a9b5";
+            const changeSign = isUp ? "+" : "";
+
+            return (
+              <Link
+                className="ba-card"
+                href="/markets"
+                key={m.id}
                 style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--hair)",
-                  borderRadius: 6,
-                  padding: "14px 16px",
-                  cursor: "pointer",
-                  height: "100%",
+                  background: "var(--navy)",
+                  boxSizing: "border-box",
+                  color: "#fff",
+                  height: 95,
+                  padding: "15px 16px 17px",
+                  textDecoration: "none",
                 }}
               >
-                {/* Country row */}
                 <div
                   style={{
-                    display: "flex",
                     alignItems: "center",
-                    gap: 8,
-                    marginBottom: 10,
-                  }}
-                >
-                  <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>
-                    {flag}
-                  </span>
-                  <div style={{ minWidth: 0 }}>
-                    <div
-                      className="mono"
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 600,
-                        letterSpacing: ".1em",
-                        color: "var(--muted)",
-                        textTransform: "uppercase",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {m.country}
-                    </div>
-                    <div
-                      className="mono"
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {m.market}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value + change badge */}
-                <div
-                  style={{
                     display: "flex",
-                    alignItems: "baseline",
                     justifyContent: "space-between",
-                    gap: 8,
-                    marginBottom: 8,
+                    marginBottom: 9,
                   }}
                 >
                   <span
-                    className="mono"
                     style={{
-                      fontSize: 20,
+                      color: "#fff",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 13,
                       fontWeight: 700,
-                      letterSpacing: "-0.01em",
-                      color: "var(--ink)",
                     }}
                   >
-                    {m.value}
+                    {m.country}
                   </span>
                   <span
-                    className="mono"
                     style={{
-                      fontSize: 12,
-                      fontWeight: 600,
                       color: changeColor,
-                      background: changeBg,
-                      padding: "2px 7px",
-                      borderRadius: 3,
-                      flexShrink: 0,
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 12,
+                      fontWeight: 700,
                     }}
                   >
                     {changeSign}
                     {m.changePct.toFixed(2)}%
                   </span>
                 </div>
-
-                {/* Headline / summary */}
-                <p
+                <div
                   style={{
-                    margin: 0,
-                    fontSize: 11,
-                    lineHeight: 1.45,
-                    color: "var(--muted)",
-                    overflow: "hidden",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
+                    color: "rgba(255,255,255,.55)",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    marginBottom: 3,
+                    textTransform: "uppercase",
                   }}
                 >
-                  {m.summary}
-                </p>
-              </article>
-            </Link>
-          );
-        })}
+                  {m.market}
+                </div>
+                <div
+                  style={{
+                    color: "#fff",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 19,
+                    fontWeight: 600,
+                  }}
+                >
+                  {m.value}
+                </div>
+              </Link>
+            );
+          })}
+          {Array.from({ length: (4 - (cards.length % 4)) % 4 }).map((_, i) => (
+            <div key={`empty-${i}`} style={{ background: "var(--navy)" }} />
+          ))}
+        </div>
       </div>
 
       <style>{`
-        .market-card {
-          transition: box-shadow .15s, border-color .15s;
+        .ba-card {
+          transition: background .15s ease;
         }
-        .market-card:hover {
-          box-shadow: 0 2px 12px rgba(0,0,0,.07);
-          border-color: var(--hair-2, #d4d4d4);
+        .ba-card:hover {
+          background: color-mix(in oklab, var(--navy) 88%, white) !important;
         }
         @media (max-width: 960px) {
           .market-ticker-grid {

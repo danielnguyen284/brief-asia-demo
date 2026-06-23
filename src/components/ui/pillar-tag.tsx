@@ -14,7 +14,7 @@ export interface PillarTagProps {
 
 /**
  * Pillar chip — uppercase letter-spaced label with a 6×6 colored square.
- * Visual spec mirrors design/project/src/ui.jsx::PillarTag.
+ * Visual spec follows the BriefAsia prototype kicker/tag treatment.
  *
  * Renders as `<span>` by default so it can be safely nested inside outer `<a>`
  * card links. Pass `href` to make it an anchor in standalone positions.

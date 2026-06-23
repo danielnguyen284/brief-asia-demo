@@ -9,7 +9,7 @@ export interface SectionHeaderProps {
 
 /**
  * Section header used across homepage bands. 28px serif title + optional kicker
- * with optional live indicator + optional right slot. 2px ink rule beneath.
+ * with optional live indicator + optional right slot. Navy prototype rule beneath.
  */
 export function SectionHeader({ title, kicker, right, liveDot }: SectionHeaderProps) {
   return (
@@ -20,7 +20,7 @@ export function SectionHeader({ title, kicker, right, liveDot }: SectionHeaderPr
         justifyContent: "space-between",
         marginBottom: 18,
         paddingBottom: 10,
-        borderBottom: "2px solid var(--brand-navy)",
+        borderBottom: "2px solid var(--navy)",
       }}
     >
       <div>

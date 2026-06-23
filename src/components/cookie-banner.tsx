@@ -34,41 +34,42 @@ export function CookieBanner() {
 
   return (
     <div
+      className="cookie-banner"
       style={{
         position: "fixed",
-        bottom: 20,
-        left: 20,
-        right: 20,
+        bottom: 14,
+        left: 14,
+        right: 14,
         zIndex: 50,
-        maxWidth: 920,
+        maxWidth: 760,
         margin: "0 auto",
         background: "var(--banner)",
-        color: "#E8EDF7",
-        padding: "14px 18px 14px 22px",
-        borderRadius: 10,
-        boxShadow: "0 18px 48px -16px rgba(17,17,17,.5)",
-        border: "1px solid rgba(232,237,247,0.10)",
+        color: "#FCFBF8",
+        padding: "10px 12px",
+        borderRadius: 6,
+        boxShadow: "0 18px 42px -22px rgba(36,26,51,.65)",
+        border: "1px solid rgba(252,251,248,0.12)",
         display: "flex",
         alignItems: "center",
-        gap: 20,
-        flexWrap: "wrap",
+        gap: 14,
       }}
     >
       <div
+        className="cookie-banner__label"
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 12,
-          paddingRight: 16,
-          borderRight: "1px solid rgba(232,237,247,0.16)",
+          gap: 10,
+          paddingRight: 12,
+          borderRight: "1px solid rgba(252,251,248,0.16)",
           flexShrink: 0,
         }}
       >
         <div
           style={{
-            width: 32,
-            height: 32,
-            borderRadius: 6,
+            width: 28,
+            height: 28,
+            borderRadius: 4,
             background: "color-mix(in oklab, var(--accent) 16%, transparent)",
             color: "var(--accent)",
             display: "flex",
@@ -94,13 +95,14 @@ export function CookieBanner() {
       </div>
 
       <p
+        className="cookie-banner__copy"
         style={{
           margin: 0,
-          fontSize: 13,
-          lineHeight: 1.5,
-          color: "rgba(232,237,247,0.85)",
+          fontSize: 12,
+          lineHeight: 1.35,
+          color: "rgba(252,251,248,0.82)",
           flex: 1,
-          minWidth: 240,
+          minWidth: 0,
         }}
       >
         {t(
@@ -110,14 +112,14 @@ export function CookieBanner() {
         )}
       </p>
 
-      <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+      <div className="cookie-banner__actions" style={{ display: "flex", gap: 8, flexShrink: 0 }}>
         <button
           onClick={dismiss}
           style={{
             background: "transparent",
-            border: "1px solid rgba(232,237,247,0.28)",
-            color: "#E8EDF7",
-            padding: "8px 14px",
+            border: "1px solid rgba(252,251,248,0.28)",
+            color: "#FCFBF8",
+            padding: "7px 12px",
             borderRadius: 5,
             fontSize: 12,
             fontWeight: 500,
@@ -131,11 +133,35 @@ export function CookieBanner() {
           variant="accent"
           size="md"
           onClick={dismiss}
-          style={{ padding: "8px 18px", whiteSpace: "nowrap" }}
+          style={{ padding: "7px 16px", whiteSpace: "nowrap" }}
         >
           {t("Accept", "Đồng ý", "Setuju")}
         </Button>
       </div>
+      <style>{`
+        @media (max-width: 560px) {
+          .cookie-banner {
+            left: 16px !important;
+            right: 16px !important;
+            bottom: 16px !important;
+            align-items: flex-start !important;
+            gap: 10px !important;
+            padding: 10px !important;
+          }
+          .cookie-banner__label {
+            border-right: 0 !important;
+            padding-right: 0 !important;
+          }
+          .cookie-banner__copy {
+            flex-basis: 100% !important;
+            order: 2 !important;
+          }
+          .cookie-banner__actions {
+            margin-left: auto !important;
+            order: 1 !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

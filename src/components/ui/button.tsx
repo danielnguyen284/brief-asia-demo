@@ -50,14 +50,14 @@ const sizes: Record<ButtonSize, CSSProperties> = {
 };
 
 const variants: Record<ButtonVariant, CSSProperties> = {
-  primary: { background: "var(--brand-navy)", color: "var(--paper)", borderColor: "var(--brand-navy)" },
+  primary: { background: "var(--navy)", color: "var(--paper)", borderColor: "var(--navy)" },
   accent: { background: "var(--accent)", color: "#fff", borderColor: "var(--accent)" },
-  outline: { background: "transparent", color: "var(--ink)", borderColor: "var(--hair-2)" },
+  outline: { background: "transparent", color: "var(--ink)", borderColor: "var(--line-strong)" },
   ghost: { background: "transparent", color: "var(--ink)" },
 };
 
 /**
- * Visual spec mirrors design/project/src/ui.jsx::Button.
+ * BriefAsia button primitive normalized from public/design-prototype.html.
  *
  * Renders as `<button>` by default. Pass `href` to render as `<a>` instead —
  * use this whenever you'd otherwise wrap the button in a Link, to avoid

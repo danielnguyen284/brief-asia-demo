@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon, type IconName } from "@/components/icons";
-import { Wordmark } from "@/components/wordmark";
-import { useTheme } from "@/components/theme-provider";
 import {
   fmtFullDate,
   localizedNavLabel,
@@ -20,7 +18,6 @@ const NUDGE_KEY = "briefasia-nudge-dismissed";
 export function Header({ pillars }: { pillars: NavPillar[] }) {
   const router = useRouter();
   const pathname = usePathname() || "/";
-  const { theme, setTheme } = useTheme();
   const { user, openAuth, openSearch, articlesRead, setUser } = useShell();
   const { lang, setLang } = useLang();
   const t = useT();
@@ -37,10 +34,9 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
   useEffect(() => {
     try {
       setNudgeDismissed(window.localStorage.getItem(NUDGE_KEY) === "1");
-      const dismissed = window.localStorage.getItem("briefasia-translation-banner-dismissed") === "1";
-      setShowTranslationBanner(!dismissed && lang !== "vi");
+      setShowTranslationBanner(false);
     } catch {
-      setShowTranslationBanner(lang !== "vi");
+      setShowTranslationBanner(false);
     }
   }, [lang]);
 
@@ -114,8 +110,6 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
     };
   }, [articlesRead, showNudge]);
 
-  const isDark = theme === "dark";
-
   return (
     <header
       ref={headerRef}
@@ -124,7 +118,7 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
         top: 0,
         zIndex: 40,
         background: "var(--paper)",
-        borderBottom: `1px solid ${scrolled ? "var(--hair)" : "transparent"}`,
+        borderBottom: `1px solid ${scrolled ? "var(--line)" : "transparent"}`,
         transition: "border-color .2s",
       }}
     >
@@ -197,14 +191,14 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
       )}
 
       {/* Top utility strip */}
-      <div style={{ borderBottom: "1px solid var(--hair)", background: "#131B26", color: "#fff" }}>
+      <div style={{ background: "var(--navy)", color: "#FCFBF8" }}>
         <div
           className="container"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: 36,
+            height: 38,
             fontSize: 11,
           }}
         >
@@ -214,16 +208,33 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
           >
             <span suppressHydrationWarning>{dateLabel ? `${dateLabel} · Asia Edition` : " "}</span>
           </div>
-          <div className="util-right" style={{ display: "flex", gap: 14, alignItems: "center" }}>
+          <div className="util-right" style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <select
+              aria-label="Language"
+              value={lang}
+              onChange={(e) => setLang(e.target.value as typeof lang)}
+              style={{
+                background: "transparent",
+                border: "none",
+                fontFamily: "var(--font-sans)",
+                fontSize: 11,
+                color: "#FCFBF8",
+                cursor: "pointer",
+                outline: "none",
+                fontWeight: 700,
+              }}
+            >
+              <option value="en" style={{ color: "#000" }}>EN</option>
+              <option value="vi" style={{ color: "#000" }}>VI</option>
+              <option value="id" style={{ color: "#000" }}>ID</option>
+            </select>
             <Link
               href="/newsletters"
               className="linkish"
-              style={{ fontSize: 11, color: "rgba(255, 255, 255, 0.8)", fontWeight: 500 }}
+              style={{ fontSize: 12, color: "#FCFBF8", fontWeight: 700 }}
             >
               {t("Newsletters", "Bản tin", "Newsletter")}
             </Link>
-            <span style={{ color: "rgba(255, 255, 255, 0.2)" }}>·</span>
-            
             {user ? (
               <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                 <button
@@ -231,8 +242,8 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                   style={{
                     background: "transparent",
                     border: "none",
-                    fontSize: 11,
-                    color: "rgba(255, 255, 255, 0.8)",
+                    fontSize: 12,
+                    color: "#FCFBF8",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
@@ -241,7 +252,7 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                   }}
                 >
                   <span>{user.name.split(" ")[0]}</span>
-                  <span style={{ fontSize: 8, color: "rgba(255, 255, 255, 0.5)" }}>▼</span>
+                  <span style={{ fontSize: 8, color: "rgba(252,251,248,.65)" }}>▼</span>
                 </button>
                 {userMenuOpen && (
                   <div
@@ -251,7 +262,7 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                       top: "calc(100% + 8px)",
                       right: 0,
                       background: "var(--surface)",
-                      border: "1px solid var(--hair)",
+                      border: "1px solid var(--line)",
                       borderRadius: 6,
                       minWidth: 200,
                       boxShadow: "var(--shadow)",
@@ -325,48 +336,25 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                 style={{
                   background: "transparent",
                   border: "none",
-                  fontSize: 11,
-                  color: "rgba(255, 255, 255, 0.8)",
+                  fontSize: 12,
+                  color: "#FCFBF8",
                   cursor: "pointer",
                   padding: 0,
-                  fontWeight: 500,
+                  fontWeight: 700,
                 }}
               >
                 {t("Sign in", "Đăng nhập", "Masuk")}
               </button>
             )}
-
-            <span style={{ color: "rgba(255, 255, 255, 0.2)" }}>·</span>
-            <select
-              aria-label="Language"
-              value={lang}
-              onChange={(e) => setLang(e.target.value as typeof lang)}
-              style={{
-                background: "transparent",
-                border: "none",
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                color: "rgba(255, 255, 255, 0.8)",
-                cursor: "pointer",
-                outline: "none",
-              }}
-            >
-              <option value="en" style={{ color: "#000" }}>EN</option>
-              <option value="vi" style={{ color: "#000" }}>VI</option>
-              <option value="id" style={{ color: "#000" }}>ID</option>
-            </select>
-            <span style={{ color: "rgba(255, 255, 255, 0.2)" }}>·</span>
             <Link
               href="/subscribe"
               style={{
                 background: "var(--accent)",
                 color: "#fff",
-                padding: "3px 10px",
+                padding: "8px 16px",
                 borderRadius: 3,
-                fontSize: 10,
-                fontWeight: 600,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                fontSize: 12,
+                fontWeight: 800,
                 textDecoration: "none",
               }}
             >
@@ -384,34 +372,67 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
           alignItems: "center",
           justifyContent: "space-between",
           gap: 24,
-          padding: "16px 24px",
+          padding: "16px 24px 14px",
+          minHeight: 86,
           background: "var(--paper)",
         }}
       >
-        {/* Newspaper wordmark + tagline */}
         <Link
           href="/"
-          style={{ display: "flex", flexDirection: "column", cursor: "pointer" }}
+          style={{ display: "flex", flexDirection: "column", cursor: "pointer", textDecoration: "none" }}
         >
-          <div style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 800, color: "var(--ink)", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
-            BRIEF <span style={{ fontStyle: "italic", color: "var(--accent)" }}>Asia</span>
+          <div
+            aria-label="BriefAsia"
+            role="img"
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 4,
+              color: "var(--accent)",
+              lineHeight: 0.9,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 39,
+                fontWeight: 400,
+                letterSpacing: 0,
+              }}
+            >
+              BRIEF
+            </span>
+            <span
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: 41,
+                fontStyle: "italic",
+                fontWeight: 600,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              Asia
+            </span>
           </div>
           <div
-            className="mono text-mute"
-            style={{ letterSpacing: ".15em", margin: "4px 0 0", fontSize: 9, fontWeight: 600, textTransform: "uppercase" }}
+            className="mono"
+            style={{
+              marginTop: 8,
+              color: "var(--muted)",
+              fontSize: 9,
+              fontWeight: 800,
+              letterSpacing: ".32em",
+              textTransform: "uppercase",
+            }}
           >
-            {t(
-              "ALL OF ASIA",
-              "TẤT CẢ VỀ CHÂU Á",
-              "SELURUH ASIA"
-            )}
+            ALL OF ASIA
           </div>
         </Link>
 
         {/* Search & Actions */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1, justifyContent: "flex-end" }}>
           {/* Search box with search icon and placeholder */}
-          <div className="desktop-only" style={{ width: "100%", maxWidth: 280 }}>
+          <div className="desktop-only" style={{ width: "100%", maxWidth: 250 }}>
             <button
               onClick={openSearch}
               style={{
@@ -419,10 +440,10 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                 display: "flex",
                 alignItems: "center",
                 gap: 10,
-                padding: "8px 12px",
-                background: "var(--surface)",
-                border: "1px solid var(--hair-2)",
-                borderRadius: 4,
+                padding: "10px 18px",
+                background: "#fff",
+                border: "1px solid var(--line-strong)",
+                borderRadius: 999,
                 color: "var(--muted)",
                 fontSize: 13,
                 textAlign: "left",
@@ -442,7 +463,7 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
             style={{
               width: 36,
               height: 36,
-              border: "1px solid var(--hair-2)",
+              border: "1px solid var(--line-strong)",
               background: "transparent",
               borderRadius: 4,
               cursor: "pointer",
@@ -455,26 +476,6 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
             <Icon name="search" size={15} />
           </button>
 
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            aria-label={isDark ? "Light mode" : "Dark mode"}
-            style={{
-              width: 36,
-              height: 36,
-              border: "1px solid var(--hair-2)",
-              background: "transparent",
-              borderRadius: 4,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "var(--ink)",
-            }}
-          >
-            <Icon name={isDark ? "sun" : "moon"} size={15} />
-          </button>
-
           {/* Mobile Menu Button */}
           <button
             className="mobile-only"
@@ -484,7 +485,7 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
             style={{
               width: 36,
               height: 36,
-              border: "1px solid var(--hair-2)",
+              border: "1px solid var(--line-strong)",
               background: "transparent",
               borderRadius: 4,
               cursor: "pointer",
@@ -503,8 +504,8 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
       <div
         className="pillar-nav-row"
         style={{
-          borderTop: "1px solid var(--hair)",
-          borderBottom: "2px solid var(--ink)",
+          borderTop: "1px solid var(--line)",
+          borderBottom: "1px solid var(--line)",
           background: "var(--paper)",
         }}
       >
@@ -513,29 +514,28 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
           style={{
             display: "flex",
             alignItems: "stretch",
-            justifyContent: "space-between",
-            height: 44,
+            justifyContent: "flex-start",
+            height: 62,
             overflowX: "auto",
             scrollbarWidth: "none", // Hide scrollbar in Firefox
           }}
         >
-          <nav style={{ display: "flex", alignItems: "stretch", gap: 4 }}>
+          <nav style={{ display: "flex", alignItems: "stretch", gap: 28 }}>
             {/* Home category */}
             <Link
               href="/"
               style={{
                 display: "flex",
                 alignItems: "center",
-                padding: "0 14px",
+                padding: "0",
                 cursor: "pointer",
-                borderBottom: pathname === "/" ? "2px solid var(--accent)" : "2px solid transparent",
-                marginBottom: -1,
-                color: pathname === "/" ? "var(--accent)" : "var(--ink)",
-                fontWeight: 600,
-                fontSize: 13,
+                borderBottom: "none",
+                color: pathname === "/" ? "var(--accent)" : "var(--navy)",
+                fontWeight: pathname === "/" ? 800 : 600,
+                fontSize: 14,
                 textDecoration: "none",
-                textTransform: "uppercase",
-                letterSpacing: "0.03em",
+                textTransform: "none",
+                letterSpacing: 0,
               }}
             >
               {t("Home", "Trang chủ", "Beranda")}
@@ -551,18 +551,15 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    padding: "0 14px",
+                    padding: "0",
                     cursor: "pointer",
-                    borderBottom: active
-                      ? `2px solid ${p.color}`
-                      : "2px solid transparent",
-                    marginBottom: -1,
-                    color: active ? p.color : "var(--ink-2)",
-                    fontWeight: 500,
-                    fontSize: 13,
+                    borderBottom: "none",
+                    color: active ? "var(--accent)" : "var(--navy)",
+                    fontWeight: active ? 800 : 600,
+                    fontSize: 14,
                     textDecoration: "none",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.03em",
+                    textTransform: "none",
+                    letterSpacing: 0,
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -688,7 +685,15 @@ export function Header({ pillars }: { pillars: NavPillar[] }) {
                 borderBottom: "1px solid var(--hair)",
               }}
             >
-              <Wordmark size={22} />
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 3, color: "var(--accent)", lineHeight: 0.9 }}>
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: 28 }}>BRIEF</span>
+                  <span style={{ fontFamily: "var(--font-serif)", fontSize: 29, fontStyle: "italic", fontWeight: 600 }}>Asia</span>
+                </div>
+                <span className="mono" style={{ marginTop: 7, color: "var(--muted)", fontSize: 8, fontWeight: 800, letterSpacing: ".28em" }}>
+                  ALL OF ASIA
+                </span>
+              </div>
               <button
                 onClick={() => setMenuOpen(false)}
                 aria-label={t("Close", "Đóng", "Tutup")}

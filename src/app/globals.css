@@ -2,76 +2,93 @@
 
 /* ---------------------------------------------------------------------------
    Design tokens — single source of truth.
-   Mirrors design/project/index.html. See process/context/uxui/all-uxui.md.
+   Mirrors public/design-prototype.html and DESIGN.md.
    --------------------------------------------------------------------------- */
 
 :root {
-  --paper: #FDFCF8;
+  --paper: #FCFBF8;
+  --paper-2: #F4EEF0;
+  --ph: #ece5e9;
+  --ink: #241a33;
+  --ink-soft: #4a4150;
+  --muted: #6e6571;
+  --faint: #9a958c;
+  --line: #ece9e2;
+  --line-strong: #ddd5cf;
+  --accent: #A60F2D;
+  --navy: #2E2147;
+  --up: #1f8a5b;
+  --down: #A60F2D;
+
+  /* Compatibility aliases for cloned DTW components. Keep these mapped to the
+     BriefAsia prototype tokens until each component is rewritten. */
   --surface: #FFFFFF;
-  --surface-2: #F2EFE5;
-  --ink: #111111;
-  --ink-2: #2A2A28;
-  --ink-soft: #2A2A28;
-  --muted: #5B5B58;
-  --muted-2: #8C8B85;
-  --faint: #8C8B85;
-  --hair: #E5E2D8;
-  --hair-2: #D8D4C6;
-  --line: #E5E2D8;
-  --line-strong: #D8D4C6;
+  --surface-2: var(--paper-2);
+  --ink-2: var(--ink-soft);
+  --muted-2: var(--faint);
+  --hair: var(--line);
+  --hair-2: var(--line-strong);
+  --accent-ink: #7f0b22;
+  --amber: #f0a9b5;
+  --brand-navy: var(--navy);
+  --brand-amber: var(--accent);
+  --banner: var(--navy);
+  --sponsored: #FAF1F3;
 
-  --accent: #D4623C;
-  --accent-ink: #B14A28;
-  --amber: #F59E0B;
-  --brand-navy: #1B2A52;
-  --brand-amber: #D4623C;
-  --banner: #1B2A52;
-  --sponsored: #FEF3C7;
-  --up: #10B981;
-  --down: #EF4444;
+  /* BriefAsia verticals use brand hierarchy, not a separate DTW palette. */
+  --asia: var(--accent);
+  --finance: var(--accent);
+  --technology: var(--accent);
+  --real-estate: var(--accent);
+  --travel-dining: var(--accent);
+  --lifestyle: var(--accent);
+  --sustainability: var(--accent);
+  --perspectives: var(--accent);
+  --ai: var(--accent);
+  --startups: var(--accent);
+  --dev: var(--accent);
+  --products: var(--accent);
+  --policy: var(--accent);
 
-  /* Pillar colors — matches prototype taxonomy */
-  --ai: #3A4E8C;
-  --startups: #3E6E80;
-  --asia: #B0512E;
-  --dev: #46735C;
-  --products: #8F7238;
-  --policy: #5A6577;
-
-  /* Site pillar taxonomy (mapped to nearest prototype color) */
-  --color-pillar-asia: #B0512E;
-  --color-pillar-finance: #3E6E80;
-  --color-pillar-technology: #3A4E8C;
-  --color-pillar-real-estate: #8F7238;
-  --color-pillar-travel-dining: #B0512E;
-  --color-pillar-lifestyle: #8F7238;
-  --color-pillar-sustainability: #46735C;
-  --color-pillar-perspectives: #5A6577;
+  --color-pillar-asia: var(--accent);
+  --color-pillar-finance: var(--accent);
+  --color-pillar-technology: var(--accent);
+  --color-pillar-real-estate: var(--accent);
+  --color-pillar-travel-dining: var(--accent);
+  --color-pillar-lifestyle: var(--accent);
+  --color-pillar-sustainability: var(--accent);
+  --color-pillar-perspectives: var(--accent);
 
   --shadow:
-    0 1px 0 rgba(17, 17, 17, 0.04),
-    0 12px 32px -16px rgba(17, 17, 17, 0.12);
+    0 1px 0 rgba(36, 26, 51, 0.04),
+    0 26px 52px -24px rgba(46, 33, 71, 0.24);
 
-  --font-serif: var(--font-serif-loaded, "Schibsted Grotesk"), "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-serif-loaded, "Newsreader"), Georgia, serif;
   --font-sans: var(--font-sans-loaded, "IBM Plex Sans"), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-mono-loaded, "IBM Plex Mono"), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-vietnam: var(--font-vietnam-loaded, "Be Vietnam Pro"), var(--font-sans);
+  --font-display: var(--font-display-loaded, "Archivo Black"), var(--font-sans);
 
   --maxw: 1280px;
 }
 
 html[data-theme="dark"] {
-  --paper: #0F172A;
-  --surface: #111C30;
-  --surface-2: #15223A;
-  --ink: #E2E8F0;
-  --ink-2: #CBD5E1;
-  --muted: #94A3B8;
-  --muted-2: #64748B;
-  --hair: #1E2B45;
-  --hair-2: #243453;
-  --sponsored: #3B2E0A;
-  --brand-navy: #E2E8F0;  /* lightened for dark mode */
-  --banner: #16223C;      /* softer banner for dark mode */
+  --paper: #181225;
+  --paper-2: #211832;
+  --ph: #2c2141;
+  --surface: #20182f;
+  --surface-2: var(--paper-2);
+  --ink: #FCFBF8;
+  --ink-soft: #e3ddd6;
+  --ink-2: var(--ink-soft);
+  --muted: #b9b1c9;
+  --faint: #9a92ad;
+  --muted-2: var(--faint);
+  --line: #3a2d4f;
+  --line-strong: #4b3c63;
+  --hair: var(--line);
+  --hair-2: var(--line-strong);
+  --sponsored: #2d1d29;
 }
 
 /* ---------------------------------------------------------------------------
@@ -85,10 +102,14 @@ html[data-theme="dark"] {
   --color-surface-2: var(--surface-2);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
+  --color-ink-soft: var(--ink-soft);
   --color-muted: var(--muted);
   --color-muted-2: var(--muted-2);
+  --color-faint: var(--faint);
   --color-hair: var(--hair);
   --color-hair-2: var(--hair-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --color-sponsored: var(--sponsored);
@@ -96,6 +117,7 @@ html[data-theme="dark"] {
   --color-down: var(--down);
   --color-banner: var(--banner);
   --color-brand-navy: var(--brand-navy);
+  --color-navy: var(--navy);
   --color-amber: var(--amber);
   --color-brand-amber: var(--brand-amber);
 
@@ -118,6 +140,8 @@ html[data-theme="dark"] {
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --font-vietnam: var(--font-vietnam);
+  --font-display: var(--font-display);
 }
 
 /* ---------------------------------------------------------------------------
@@ -180,7 +204,7 @@ h4 {
 
 /* ---------------------------------------------------------------------------
    Layout shell + utility classes
-   Ported from design/project/index.html. Note: `.container` here intentionally
+   Normalized from public/design-prototype.html. Note: `.container` here intentionally
    shadows Tailwind v4's built-in `.container` utility (which has width:100%
    but no auto margins). This rule must stay AFTER `@import "tailwindcss"`.
    --------------------------------------------------------------------------- */
@@ -221,7 +245,7 @@ body {
   display: flex;
 }
 .mobile-only {
-  display: none;
+  display: none !important;
 }
 @media (max-width: 900px) {
   .desktop-only {
@@ -273,11 +297,60 @@ body {
   }
 }
 
-/* Hero: lead + "also leading" rail -> single column. */
+/* Prototype homepage lead: lead story | story stack | live/most-read rail. */
+.ba-home-lead {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 452px);
+  padding: 32px 0 10px;
+}
+.ba-home-lead-main {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
+}
+.ba-home-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ba-vertical-grid {
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(0, 1.62fr) minmax(260px, 1fr) minmax(260px, 1fr);
+  min-height: 418px;
+}
 .r-hero {
   grid-template-columns: 1.7fr 1fr;
 }
+@media (max-width: 1100px) {
+  .ba-home-lead {
+    grid-template-columns: 1fr;
+  }
+  .ba-home-rail {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .ba-home-rail > div {
+    grid-column: 1 / -1;
+  }
+  .ba-vertical-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ba-vertical-grid > a {
+    grid-column: 1 / -1;
+  }
+}
 @media (max-width: 900px) {
+  .ba-home-lead-main,
+  .ba-home-rail,
+  .ba-vertical-grid {
+    grid-template-columns: 1fr;
+  }
+  .ba-vertical-grid > a {
+    grid-column: auto;
+  }
   .r-hero {
     grid-template-columns: 1fr;
   }
@@ -409,7 +482,7 @@ body {
 }
 .rule-thick {
   height: 3px;
-  background: var(--ink);
+  background: var(--navy);
   width: 100%;
 }
 
@@ -498,11 +571,11 @@ body {
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 0 0 rgba(166, 15, 45, 0.6);
   }
   50% {
     opacity: 0.55;
-    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 6px rgba(166, 15, 45, 0);
   }
 }
 .live-dot {
@@ -520,8 +593,8 @@ button {
 }
 button[data-glow="1"]:hover {
   box-shadow:
-    0 0 0 1px rgba(224, 78, 31, 0.4),
-    0 8px 28px -6px rgba(224, 78, 31, 0.45);
+    0 0 0 1px rgba(166, 15, 45, 0.34),
+    0 8px 28px -6px rgba(166, 15, 45, 0.42);
 }
 
 @media (prefers-reduced-motion: reduce) {
